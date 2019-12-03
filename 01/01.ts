@@ -1,4 +1,4 @@
-var input = [
+export var input = [
     125860,
     66059,
     147392,
@@ -100,14 +100,14 @@ var input = [
     132329,
     65057]
 
-function SumFuelRequired(listOfLaunchPayloads: Array<number>): number {
+export function SumFuelRequired(listOfLaunchPayloads: Array<number>): number {
     let sum = 0;
     listOfLaunchPayloads.forEach(mass => {
         sum = sum + GetFuelRequired(mass);
     });
     return sum;
 }
-function GetFuelRequired(mass: number) : number {
+export function GetFuelRequired(mass: number) : number {
     let fuelRequired = 0;
     fuelRequired = Math.floor(mass / 3) - 2;
 
