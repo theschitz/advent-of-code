@@ -4,16 +4,16 @@ function GravityAssist(intCodeProgram: Array<number>) : Array<number> {
     let currPos = 0;
     while (currPos <= intCodeProgram.length) {
         let opCode = intCodeProgram[currPos];
-        let intA = intCodeProgram[currPos + 1];
-        let intB = intCodeProgram[currPos + 2];
+        let posA = intCodeProgram[currPos + 1];
+        let posB = intCodeProgram[currPos + 2];
         let storePos = intCodeProgram[currPos + 3];
 
         switch (opCode) {
             case 1:
-                intCodeProgram[storePos] = intCodeProgram[intA] + intCodeProgram[intB];
+                intCodeProgram[storePos] = intCodeProgram[posA] + intCodeProgram[posB];
                 break;
             case 2:
-                intCodeProgram[storePos] = intCodeProgram[intA] * intCodeProgram[intB];
+                intCodeProgram[storePos] = intCodeProgram[posA] * intCodeProgram[posB];
                 break;
             case 99:
                 return intCodeProgram;
