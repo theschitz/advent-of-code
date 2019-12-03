@@ -1,4 +1,4 @@
-export var input = [
+var input = [
     125860,
     66059,
     147392,
@@ -100,18 +100,42 @@ export var input = [
     132329,
     65057]
 
-export function SumFuelRequired(listOfLaunchPayloads: Array<number>): number {
+function SumFuelRequired(listOfLaunchPayloads: Array<number>): number {
     let sum = 0;
     listOfLaunchPayloads.forEach(mass => {
         sum = sum + GetFuelRequired(mass);
     });
     return sum;
 }
-export function GetFuelRequired(mass: number) : number {
+function GetFuelRequired(mass: number) : number {
     let fuelRequired = 0;
     fuelRequired = Math.floor(mass / 3) - 2;
 
     return fuelRequired;
 }
+function SumAdditionalFuelRequired(listOfLaunchPayloads: Array<number>) : number {
+    let totalSumOfFuelRequired = 0;
+    listOfLaunchPayloads.forEach(mass => {
+        let fuelRequired = GetFuelRequired(mass);        
+        while (fuelRequired > 0) {
+            totalSumOfFuelRequired = totalSumOfFuelRequired + fuelRequired;
+            fuelRequired = GetFuelRequired(fuelRequired);
+        }
+    });
+    return totalSumOfFuelRequired;
+}
 
+function TestSumAddtional() {
+    let reqFuel = SumAdditionalFuelRequired([100756]);
+    if (reqFuel !== 50346) {
+        throw "Failed! Result is: " + reqFuel;
+        
+    } else {
+        console.log('Success! Result is ' + reqFuel);
+    }
+}
+
+//Part One
 console.log(SumFuelRequired(input));
+//Part Two
+console.log(SumAdditionalFuelRequired(input));
