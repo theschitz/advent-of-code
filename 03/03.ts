@@ -1,94 +1,94 @@
-function GetWires(){
-    let wire1 = ['R991','U77','L916','D26','R424','D739','L558','D439','R636','U616','L364','D653','R546','U909','L66','D472','R341','U906','L37','D360','L369','D451','L649','D521','R2','U491','R409','U801','R23','U323','L209','U171','L849','D891','L854','U224','R476','D519','L937','U345','R722','D785','L312','D949','R124','U20','R677','D236','R820','D320','L549','D631','R42','U621','R760','U958','L925','U84','R914','U656','R598','D610','R397','D753','L109','U988','R435','U828','R219','U583','L317','D520','L940','D850','R594','D801','L422','U292','R883','U204','L76','U860','L753','U483','L183','U179','R441','U163','L859','U437','L485','D239','R454','D940','R689','D704','R110','D12','R370','D413','L192','D979','R990','D651','L308','U177','R787','D717','R245','U689','R11','D509','L680','U228','L347','D179','R508','D40','L502','U689','L643','U45','R884','D653','L23','D918','L825','D312','L691','U292','L285','D183','R997','U427','L89','U252','R475','U217','R16','U749','L578','D931','L273','U509','L741','U97','R407','U275','L605','U136','L558','U318','R478','U505','R446','U295','R562','D646','R988','D254','L68','U645','L953','U916','L442','D713','R978','U540','R447','U594','L804','U215','R95','D995','R818','D237','R212','U664','R455','D684','L338','U308','R463','D985','L988','D281','R758','U510','L232','U509','R289','D90','R65','D46','R886','D741','L327','U755','R236','U870','L764','U60','R391','U91','R367','U587','L651','D434','L47','U954','R707','D336','L242','D387','L410','D19','R203','D703','L228','U292','L19','U916','R411','U421','L726','U543','L240','U755','R157','U836','L397','U71','L125','D934','L723','D145','L317','D229','R863','U941','L926','D55','L2','D452','R895','D670','L216','U504','R66','U696','L581','U75','L235','U88','L609','U415','L850','U21','L109','U416','R408','D367','R823','D199','L718','U136','L860','U780','L308','D312','R230','D671','R477','D672','L94','U307','R301','D143','L300','D792','L593','D399','R840','D225','R680','D484','L646','D917','R132','D213','L779','D143','L176','U673','L772','D93','L10','D624','L244','D993','R346']
-    let wire2 = ['L997','U989','L596','U821','L419','U118','R258','D239','R902','D810','R553','D271','R213','D787','R723','D57','L874','D556','R53','U317','L196','D813','R500','U151','R180','D293','L415','U493','L99','U482','R517','U649','R102','U860','R905','D499','R133','D741','R394','U737','L903','U800','R755','D376','L11','U751','R539','U33','R539','U30','L534','D631','L714','U190','L446','U409','R977','D731','R282','U244','R29','D212','L523','D570','L89','D327','R178','U970','R435','U250','R213','D604','R64','D348','R315','D994','L508','D261','R62','D50','L347','U183','R410','D627','L128','U855','L803','D695','L879','U857','L629','D145','L341','D733','L566','D626','L302','U236','L55','U428','R183','U254','R226','D228','R616','U137','L593','U204','R620','U624','R605','D705','L263','D568','R931','D464','R989','U621','L277','U274','L137','U768','L261','D360','L45','D110','R35','U212','L271','D318','L444','D427','R225','D380','L907','D193','L118','U741','L101','D298','R604','D598','L98','U458','L733','U511','L82','D173','L644','U803','R926','D610','R24','D170','L198','U766','R656','D474','L393','D934','L789','U92','L889','U460','L232','U193','L877','D380','L455','D526','R899','D696','R452','U95','L828','D720','R370','U664','L792','D204','R84','D749','R808','U132','L152','D375','R19','U164','L615','D121','R644','D289','R381','U126','L304','U508','L112','D268','L572','D838','L998','U127','R500','D344','R694','U451','L846','D565','R158','U47','L430','U214','R571','D983','R690','D227','L107','U109','L286','D66','L544','U205','L453','U716','L36','U672','L517','U878','L487','U936','L628','U253','R424','D409','R422','U636','R412','U553','R59','D332','R7','U495','L305','D939','L428','D821','R749','D195','R531','D898','R337','D303','L398','D625','R57','D503','L699','D553','L478','U716','R897','D3','R420','U903','R994','U864','L745','U205','R229','U126','L227','D454','R670','U605','L356','U499','R510','U238','L542','D440','R156','D512','L237','D341','L439','U642','R873','D650','R871','D616','R322','U696','R248','D746','R990','U829','R812','U294','L462','U740','R780']
-    return [wire1, wire2];
+import * as assert from 'assert';
+
+interface XY {
+    x: number;
+    y: number;
 }
 
-function GetManhattanDistance(wireA: Array<string>, wireB: Array<string>): number {
-    let distance = 0;
-    let x1: number = 0, x0: number = 0, y1: number = 0, y0: number = 0;
-    //let matrix = Array(100).map(x => Array(100));
-    let mapA = GetWireMap(wireA);
+function Locations(path: string): Set<XY> {
+    let x = 0;
+    let y = 0;
+    let visited: Set<XY> = new Set();
+    let route = path.split(',');
 
-
-    // wireA.forEach(move => {
-    //     let length: number = parseInt(move.slice(1, move.length));
-    //     switch (move[0].toUpperCase()) {
-    //         case 'L':
-    //             if (length > y1) {
-    //                 y1 = length;
-    //             }
-    //             break;
-    //         case 'R':
-    //             if (length > y0) {
-    //                 y0 = length;
-    //             }
-    //             break;
-    //         case 'U':
-    //             if (length > x1) {
-    //                 x1 = length;
-    //             }
-    //             break;
-    //         case 'D':
-    //             if (length > x0) {
-    //                 x0 = length;
-    //             }
-    //             break;
-    //         default:
-    //             throw "Unknown direction " + move[0];
-    //     }
-    // });
-    mapA.forEach(m => {
-        console.log(m);
-    });
-    distance = Math.abs(x1 - x0) + Math.abs(y1 - y0);
-    console.log(distance);
-    return distance;
-}
-
-function GetWireMap(wire: Array<string>) {
-    let matrix = [[]];
-    let x = 3;
-    let y = 3;
-    wire.forEach(move => {
-        let length: number = parseInt(move.slice(1, move.length));
-        switch (move[0].toUpperCase()) {
-            case 'L':
-                y = y + length;
-                break;
-            case 'R':
-                
-                break;
-            case 'U':
-                break;
-            case 'D':
-                break;
-            default:
-                throw "Unknown direction " + move[0];
+    for (const line of route) {
+        let direction = line[0];
+        let distance = parseInt(line.slice(1));
+        for (let i = 0; i < distance; i++) {
+            switch (direction) {
+                case 'U':
+                    y += 1;
+                    break;
+                case 'D':
+                    y -= 1;
+                    break;
+                case 'R':
+                    x += 1;
+                    break;
+                case 'L':
+                    x -= 1;
+                    break;
+                default:
+                    throw new Error(`Unknown direction ${direction}`);
+            }
+            let xy: XY = {x: x, y: y}
+            visited.add(xy);
         }
-    });    
+    }
+    return visited;
+
+}
+
+function AllIntersections(path1:string, path2:string): Set<XY> {
+    let locations1 = Locations(path1);
+    let locations2 = Locations(path2);
+    console.log('locations1 size:', locations1.size);
+    console.log('locations2 size: ', locations2.size);
+    let intersection = new Set<XY>();
+    for (const i of locations1) {
+        if (locations2.has(i)) {
+            intersection.add(i);
+        }
+    }
+    // const intersection = new Set(
+    //     [...locations1].filter(x => locations2.has(x))
+    //     );
+    console.log('intersections', intersection.size);
+    return intersection;
+}
+
+function ClosestIntersection(path1: string, path2:string): number {
+    let ai: Set<XY> = AllIntersections(path1, path2);
+    let manhattanDistances: Array<number> = [];
+    for (const intersection of ai) {
+        manhattanDistances.push(GetManhattanDistance(intersection));
+    }
+    console.log(manhattanDistances);
+    return Math.min(...manhattanDistances);
+}
+
+function GetManhattanDistance(xy: XY): number {
+    return Math.abs(xy.x) + Math.abs(xy.y);
+}
+function GetMatrix(x: number, y: number): string[][] {
+    //let array: string[][] = [];
+    let matrix = new Array(x);
+    for (let i = 0; i < matrix.length; i++) {
+        matrix[i] = new Array(y).fill('.');
+        
+    }
     return matrix;
 }
 
-function TestManhattanDistance() {
-    let distance = 0;
-    // Distance 159
-    let wire1 = ['R75', 'D30', 'R83', 'U83', 'L12', 'D49', 'R71', 'U7','L72'];
-    let wire2 = ['U62', 'R66', 'U55', 'R34', 'D71', 'R55', 'D58', 'R83'];
-    distance = GetManhattanDistance(wire1, wire2);
-    if (distance !== 159) {
-        throw "Test 1 failed. Expected 159. Got " + distance;
-
-    }
-    // Distance 135
-    wire1 = ['R98', 'U47', 'R26', 'D63', 'R33', 'U87', 'L62', 'D20', 'R33', 'U53', 'R51'];
-    wire2 = ['U98', 'R91', 'D20', 'R16', 'D67', 'R40', 'U7', 'R15', 'U6', 'R7'];
-    distance = GetManhattanDistance(wire1, wire2);
-    if (distance !== 159) {
-        throw "Test 2 failed. Expected 135. Got " + distance;
-
-    }
-
+function TestClosestIntersection() {
+    assert.equal(ClosestIntersection("R8,U5,L5,D3", "U7,R6,D4,L4"), 6);
+    assert.equal(ClosestIntersection("R75,D30,R83,U83,L12,D49,R71,U7,L72",
+                                "U62,R66,U55,R34,D71,R55,D58,R83"), 159);
+    assert.equal(ClosestIntersection("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51",
+                                "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7"), 135);
 }
+TestClosestIntersection();
+let PATH1 = "R994,U598,L555,D997,R997,U529,L251,U533,R640,U120,L813,U927,L908,U214,L276,U306,L679,U187,R156,D654,L866,D520,R299,U424,R683,U49,R965,U531,R303,D4,L210,U425,R99,D892,R564,D671,L294,D908,L89,U855,R275,U790,R214,D588,L754,D873,R297,D97,R979,U850,L953,D281,L580,D254,L747,U115,L996,U641,R976,U585,L383,U498,L112,U329,R650,U772,L952,U325,L861,U831,R71,D853,R696,D812,R389,U456,L710,D116,R789,D829,L57,D940,R908,U569,R617,D832,L492,D397,R152,U898,L960,D806,L867,U928,L617,D281,L516,D214,R426,U530,R694,U774,L752,U215,L930,U305,R463,U774,R234,U786,R425,U470,R90,D383,R692,D626,L160,D588,L141,D351,R574,D237,L869,D499,R873,U856,R148,D919,L582,D804,L413,U201,L247,U907,L828,D279,L28,D950,L587,U290,R636,U344,L591,U118,L614,U203,R381,U634,L301,D197,R594,D373,L459,U504,L703,U852,L672,U613,R816,D712,R813,U97,R824,D690,L556,D308,L568,D924,L384,U540,R745,D679,R705,D808,L346,U927,R145,U751,L769,D152,L648,D553,L738,U456,R864,U486,R894,D923,R76,U211,L78,U145,R977,U297,R93,U200,L71,U665,L392,D309,L399,D594,R118,U552,L328,U317,R369,D109,L673,D306,R441,U836,L305,D59,L870,U648,L817,D381,R676,U711,R115,U344,L815,U286,R194,U526,R844,U106,L547,D312,L116,U783,R786,D390,L115,D483,R691,U802,R569,U13,R854,D90,R22,D819,L440,D13,R438,D640,L952,D394,R984,D825,R1,D554,R349,U746,L816,U301,L397,D85,R437,D746,L698,D75,L964,U155,L268,U612,R838,D338,L188,U38,R830,U538,L245,D885,R194,D989,R8,D69,L268,D677,R163,U784,L308,U605,L737,U919,R117,U449,R698,U547,L134,D860,L234,U923,R495,D55,R954,D531,L212"
+let PATH2 = "L1005,D937,L260,D848,R640,U358,R931,U495,R225,U344,R595,U754,L410,D5,R52,D852,L839,D509,R755,D983,R160,U522,R795,D465,R590,U558,R552,U332,R330,U752,R860,D503,L456,U254,R878,D164,R991,U569,R44,U112,L258,U168,L552,U68,R414,U184,R458,D58,R319,U168,R501,D349,R204,D586,R241,U575,L981,D819,L171,D811,L960,U495,R192,D725,R718,D346,R399,D692,L117,D215,L390,U364,L700,D207,R372,U767,L738,D844,L759,D211,R287,U964,R328,D800,R823,U104,L524,D68,R714,D633,R565,D373,R883,U327,R222,D318,L58,D451,R555,D687,R807,U638,L717,U298,R849,D489,L159,D692,L136,U242,R884,U202,R419,U41,L980,U483,R966,D513,L870,D306,R171,D585,R71,D320,R914,U991,R706,U440,R542,D219,L969,U9,R481,U164,R919,U17,L750,U775,R173,U515,L191,D548,L515,U54,L132,U56,R203,U544,L796,D508,L321,D517,L358,U12,L892,D472,L378,U121,L974,U36,R56,D758,L680,D17,L369,D72,L926,D466,L866,U850,R300,D597,L848,U17,L890,D739,L275,U560,L640,U602,R238,U919,R636,D188,R910,D992,L13,U241,R77,U857,R453,U883,L881,D267,R28,U928,R735,U731,L701,D795,R371,U652,R416,D129,R142,D30,R442,U513,R827,U455,L429,D804,R966,D565,R326,U398,R621,U324,L684,D235,L467,D575,L200,D442,R320,D550,R278,U929,R555,U537,L416,U98,R991,D271,L764,U841,L273,D782,R356,D447,R340,U413,R543,U260,L365,D529,R721,U542,L648,U366,R494,U243,L872,U201,L440,U232,R171,D608,R282,U484,R81,D320,R274,D760,L250,U749,L132,D162,L340,D308,L149,D5,L312,U547,R686,D684,R133,D876,L531,U572,R62,D142,L218,U703,L884,U64,L889,U887,R228,U534,R624,D524,R522,D452,L550,U959,R981,U139,R35,U98,R212"
 
-TestManhattanDistance();
+console.log(ClosestIntersection(PATH1, PATH2));
