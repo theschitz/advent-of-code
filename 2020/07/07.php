@@ -62,7 +62,28 @@ function can_contain_color($bags, string $color): array {
         }
     }
         return $can_contain;
-    
+}
+
+function number_of_bags_inside($bags, $color): int {
+    $by_color = [];
+    $num_bags = 0;
+    foreach($bags as $bag) {
+        $by_color[$bag->color] = $bag;
+    }
+    $check = [[$color, 1]];
+    while ($check) {
+        $next_color = array_pop($check);
+        $multiplier = $next_color[1];
+        $next_color = $next_color[0];
+        if (array_key_exists($next_color, $by_color)) {
+            $bag = $by_color[$next_color];
+            foreach($bag->contains as $b=>$c) {
+                $num_bags += $multiplier * $c;
+                array_push($check, [$b, $multiplier * $c]);
+            }
+        }
+    }
+    return $num_bags;
 }
 
 
@@ -70,6 +91,8 @@ $bags = [];
 foreach ($input as $value) {
     array_push($bags, parse_line($value));
 }
-echo 'Answer'. sizeof(can_contain_color($bags, 'shiny gold'))."\n";
+echo 'Answer Part 1: '. sizeof(can_contain_color($bags, 'shiny gold')) ."\n";
+echo 'Answer Part 2:'. number_of_bags_inside($bags, 'shiny gold') ."\n";
+
 
 ?>
