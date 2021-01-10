@@ -1,7 +1,6 @@
 <?php
 
 $input = explode("\n", file_get_contents('input.txt'));
-$answer = 0;
 
 class Bag
 {
