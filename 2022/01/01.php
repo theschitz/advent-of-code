@@ -4,7 +4,6 @@ $input = file_get_contents(__DIR__ . '/input.txt');
 // $input = file_get_contents(__DIR__ . '/test-input.txt');
 
 $input = explode(PHP_EOL.PHP_EOL, $input);
-$data = [];
 $data = array_map(
     function ($i) {
         return array_sum(explode(PHP_EOL, $i));
