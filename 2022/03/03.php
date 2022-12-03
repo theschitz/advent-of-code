@@ -15,4 +15,13 @@ foreach ($input as $sack) {
     );
     array_walk($commonItems, function ($i) {global $sumOfPriorities; $sumOfPriorities += ord($i) - (ctype_upper($i) ? 38 : 96);});
 }
-echo "Sum of priorities: $sumOfPriorities" . PHP_EOL; //7795
+echo "Part 1: Sum of priorities: $sumOfPriorities." . PHP_EOL; //7795
+
+$sumOfPriorities = 0;
+foreach (array_chunk($input, 3) as $team ) {
+    $badge = array_values(array_unique(array_intersect(str_split($team[0]), str_split($team[1]), str_split($team[2]))))[0];
+    $sumOfPriorities += ord($badge) - (ctype_upper($badge) ? 38 : 96);
+    
+}
+
+echo "Part 2: $sumOfPriorities." . PHP_EOL; //2703
