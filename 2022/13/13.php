@@ -1,4 +1,3 @@
 <?php
 
-$input = file_get_contents(__DIR__ . '/input.txt');
-// $input = file_get_contents(__DIR__ . '/test-input.txt');
+$input = explode(PHP_EOL, file_get_contents(__DIR__ . '/' . (isset($argv[1]) ? 'test-' : ''). 'input.txt'));
