@@ -1,33 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 $input = explode(PHP_EOL . PHP_EOL, file_get_contents(__DIR__ . '/' . (isset($argv[1]) ? 'test-' : ''). 'input.txt'));
 
-$noOfColumns = 0;
-
-function parseStacks()
+function parseStacks(array $stacks)
 {
-    global $input;
-    global $noOfColumns;
-    $stacks = explode(PHP_EOL, $input[0]);
-    $noOfColumns = strlen($stacks[0]) / 4;
     array_pop($stacks);
     $result = [];
     foreach ($stacks as $s) {
-        for ($i=0; $i < $noOfColumns; $i++) {
-            $startPos = $i * 4;
-            $crate = trim(substr($s, $startPos, 3));
-            if ($crate) {
-                $result[$i + 1][] = trim(substr($s, $startPos, 3));
+        for ($i=0; $i < strlen($stacks[0]) / 4; $i++) {
+            if (trim(substr($s, $i * 4, 3))) {
+                $result[$i + 1][] = trim(substr($s, $i * 4, 3));
             }
         }
     }
     return $result;
 }
 
-function parseInstructions()
+function parseInstructions(array $instructions)
 {
-    global $input;
-    $instructions = explode(PHP_EOL, $input[1]);
     $result = [];
     foreach ($instructions as $inst) {
         $result[] = [
@@ -39,25 +31,32 @@ function parseInstructions()
     return $result;
 }
 
-$stacks = parseStacks();
-$instructions = parseInstructions();
-
-function crateMover9000()
+function crateMover(string $crateMoverModel, array $input): string
 {
-    global $instructions;
-    global $stacks;
+    $stacks = parseStacks(explode(PHP_EOL, $input[0]));
+    $instructions = parseInstructions(explode(PHP_EOL, $input[1]));
     foreach ($instructions as $inst) {
-        for ($i=0; $i < $inst['move']; $i++) {
-            $stacks[$inst['to']] = array_merge([$stacks[$inst['from']][0]], $stacks[$inst['to']]);
-            unset($stacks[$inst['from']][0]);
-            $stacks[$inst['from']] = array_Values($stacks[$inst['from']]);
+        if ($crateMoverModel === "9001") {
+            $crates = array_slice($stacks[$inst['from']], 0, $inst['move']);
+            $stacks[$inst['to']] = array_merge($crates, $stacks[$inst['to']]);
+            for ($i=0; $i < $inst['move']; $i++) {
+                unset($stacks[$inst['from']][0]);
+                $stacks[$inst['from']] = array_Values($stacks[$inst['from']]);
+            }
+        } else {
+            for ($i=0; $i < $inst['move']; $i++) {
+                $stacks[$inst['to']] = array_merge([$stacks[$inst['from']][0]], $stacks[$inst['to']]);
+                unset($stacks[$inst['from']][0]);
+                $stacks[$inst['from']] = array_Values($stacks[$inst['from']]);
+            }
         }
     }
+    $combination = '';
+    for ($i=0; $i < count($stacks); $i++) {
+        $combination .= $stacks[$i+1][0];
+    }
+    return str_replace(['[', ']'], '', $combination);
 }
-crateMover9000();
-$combination = '';
-for ($i=0; $i < $noOfColumns ; $i++) {
-    $combination .= $stacks[$i+1][0];
-}
-$combination = str_replace(['[', ']'], '', $combination);
-echo "Part 1: $combination" . PHP_EOL; // BWNCQRMDB
+
+echo "Part 1: " . crateMover("9000", $input) . PHP_EOL; // BWNCQRMDB
+echo "Part 2: " . crateMover("9001", $input) . PHP_EOL; // NHWZCBNBF
