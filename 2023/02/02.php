@@ -56,9 +56,12 @@ function parseGames(array $data)
             'id'
         )
     ), PHP_EOL;
-    array_walk($games, function (&$g) {
-        $g['power'] = array_product(array_values($g['minSet']));
-    });
+    array_walk(
+        $games,
+        function (&$g) {
+            $g['power'] = array_product(array_values($g['minSet']));
+        }
+    );
     echo "Part 2: ", array_sum(array_column($games, 'power')), PHP_EOL; 
 }
 
